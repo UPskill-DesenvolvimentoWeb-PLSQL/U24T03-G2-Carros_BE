@@ -31,18 +31,9 @@ const importCars = async () => {
     .pipe(csv({ separator: ';', headers: ['Brand', 'Model', 'StartYear', 'EndYear'] }))
     .on('data', (row) => {
       try {
-        const startYear = parseInt(row['StartYear']);
-        const endYear = row['EndYear'] === '-' ? new Date().getFullYear() : parseInt(row['EndYear']);
-        const expandedYears = [];
-
-        for (let year = startYear; year <= endYear; year++) {
-          expandedYears.push(year);
-        }
-
         cars.push({
           brand: row['Brand'],
           model: row['Model'],
-          years: expandedYears,
         });
       } catch (err) {
         console.error(`Error processing row: ${JSON.stringify(row)} - ${err.message}`);
